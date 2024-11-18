@@ -1,0 +1,52 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: CSV file imported correctly
+msgid "CSV file imported correctly"
+msgstr "file CSV importato correttamente"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: Export CSV file
+msgid "Export CSV file"
+msgstr "Esporta file CSV"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: Import CSV file
+msgid "Import CSV file"
+msgstr "Importa file CSV"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: {count} new items imported
+msgid "Imported item count"
+msgstr "{count} nuovi elementi importati"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: {count} items modified
+msgid "Modified item count"
+msgstr "{count} elementi modificati"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: Undo
+msgid "Undo"
+msgstr "Ripristina"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: Undo all modifications
+msgid "Undo all modifications"
+msgstr "Ripristinare tutte le modifiche"
+
+#: components/Widgets/ReactTableWidget
+# defaultMessage: Undo message
+msgid "Undo message"
+msgstr "Messaggio di ripristino"
