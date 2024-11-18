@@ -20,7 +20,6 @@ const Edit = (props) => {
     const { block, data, onChangeBlock, selected } = props;
 
     const onChange = (id, props) => {
-        console.log("update table", id, props);
         const { items } = props;
         onChangeBlock(block, {
             ...data,
@@ -59,17 +58,20 @@ const Edit = (props) => {
 
     return (
         <>
-
             <ReactTableWidget
+                id={`${block}_table_widget`}
                 schema={data?.schema || emptySchema()}
+                updateSchema={onChangeSchema}
                 // {...props}
                 csvexport={true}
                 csvimport={true}
+                undomodifications={true}
                 value={data?.items || []}
                 onChange={(id, value) => onChange(id, { items: value })}
             />
-            <pre>{JSON.stringify(data?.items, null, 2)}</pre>
+
             <SidebarPortal selected={selected}>
+                {/* <pre>{JSON.stringify(data?.schema, null, 2)}</pre> */}
                 <Form
                     schema={contentTypeSchema}
                     formData={{ schema: data?.schema || emptySchema() }}

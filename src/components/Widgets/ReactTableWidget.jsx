@@ -1,6 +1,6 @@
 import './react-table-widget.css';
 
-import { Button, Modal, Segment, Grid } from 'semantic-ui-react';
+import { Button, Modal, Segment, Grid, Checkbox, Label } from 'semantic-ui-react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { CSVLink } from 'react-csv';
@@ -47,8 +47,9 @@ const messages = defineMessages({
 });
 
 const ReactDataTableWidget = (props) => {
-  let {
+  const {
     schema,
+    updateSchema,
     value,
     onChange,
     id,
@@ -71,6 +72,7 @@ const ReactDataTableWidget = (props) => {
   const [originalData] = React.useState(value);
   const [hasModifiedData, setHasModifiedData] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(0);
+  const [updateSchemaOnImport, setUpdateSchemaOnImport] = React.useState(false);
 
   const updateCell = (rowIndex, columnId, updateValue) => {
     setHasModifiedData(true);
@@ -129,7 +131,7 @@ const ReactDataTableWidget = (props) => {
   const { CSVReader } = useCSVReader();
   return (
     <div className="inline field">
-      <Grid>
+      {(schema.title || schema.description) && <Grid>
         <Grid.Row stretched>
           <Grid.Column width={4}>
             <div className="wrapper">
@@ -143,7 +145,7 @@ const ReactDataTableWidget = (props) => {
             <p className="help">{schema.description}</p>
           </Grid.Column>
         </Grid.Row>
-      </Grid>
+      </Grid>}
       <Segment basic textAlign="center">
         {undomodifications && (
           <Modal
@@ -185,49 +187,87 @@ const ReactDataTableWidget = (props) => {
         )}
 
         {csvimport && (
-          <CSVReader
-            onUploadAccepted={(results) => {
-              let newdatacount = 0;
-              let newdata = results.data.map((item) => {
-                if (!item['@id']) {
-                  newdatacount += 1;
-                  return {
-                    ...item,
-                    '@id': uuid(),
-                  };
+          <>
+            <CSVReader
+              onUploadAccepted={(results) => {
+                let newdatacount = 0;
+                const newdata = results.data.map((item) => {
+                  if (!item['@id']) {
+                    newdatacount += 1;
+                    return {
+                      ...item,
+                      '@id': uuid(),
+                    };
+                  }
+                  return item;
+                });
+                const modifiedcount = newdata.length - newdatacount;
+                onChange(id, newdata);
+                if (updateSchemaOnImport && results.data.length > 0) {
+                  const imported_fields = Object.keys(results.data[0]);
+                  const schema_fields = schema.fieldsets?.[0]?.fields || [];
+                  const schema_properties = schema.properties || {};
+                  imported_fields.forEach((field) => {
+                    if (!schema_fields.includes(field)) {
+                      schema_fields.push(field);
+                    }
+                    if (!schema_properties[field]) {
+                      schema_properties[field] = {
+                        factory: "label_textline_field",
+                        id: field,
+                        title: field,
+                        type: "string",
+                      };
+                    }
+                  })
+                  updateSchema({
+                    schema: {
+                      ...schema,
+                      fieldsets: [
+                        {
+                          ...schema.fieldsets?.[0],
+                          fields: schema_fields,
+                        }
+                      ],
+                      prooperties: schema_properties,
+                    }
+                  })
                 }
-                return item;
-              });
-              let modifiedcount = newdata.length - newdatacount;
-              onChange(id, newdata);
-              toast.success(
-                <Toast
-                  success
-                  autoClose={5000}
-                  content={`${intl.formatMessage(
-                    messages.csv_file_imported_correctly,
-                  )} ${intl.formatMessage(
-                    messages.import_new_imported_item_count,
-                    {
-                      count: newdatacount,
-                    },
-                  )} ${intl.formatMessage(messages.import_modified_item_count, {
-                    count: modifiedcount,
-                  })}`}
-                />,
-              );
-            }}
-            config={{ header: true }}
-          >
-            {({ getRootProps, ProgressBar }) => (
-              <>
-                <Button type="button" {...getRootProps()}>
-                  {intl.formatMessage(messages.import_csv_file)}
-                </Button>
-                <ProgressBar />
-              </>
-            )}
-          </CSVReader>
+                toast.success(
+                  <Toast
+                    success
+                    autoClose={5000}
+                    content={`${intl.formatMessage(
+                      messages.csv_file_imported_correctly,
+                    )} ${intl.formatMessage(
+                      messages.import_new_imported_item_count,
+                      {
+                        count: newdatacount,
+                      },
+                    )} ${intl.formatMessage(messages.import_modified_item_count, {
+                      count: modifiedcount,
+                    })}`}
+                  />,
+                );
+              }}
+              config={{ header: true }}
+            >
+              {({ getRootProps, ProgressBar }) => (
+                <>
+                  <Button type="button" {...getRootProps()}>
+                    {intl.formatMessage(messages.import_csv_file)}
+                  </Button>
+                  <ProgressBar />
+                </>
+              )}
+            </CSVReader>
+            <Checkbox
+              id={`${id}_update_schema`}
+              value={updateSchemaOnImport}
+              onChange={() => { setUpdateSchemaOnImport(!updateSchemaOnImport) }}
+              label={<label htmlFor={`${id}_update_schema`}>Update schema</label>}
+            />
+          </>
         )}
 
         <EditableTable

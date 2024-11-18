@@ -1,6 +1,10 @@
-// TODO: make loadable ?
+import loadable from '@loadable/component';
 
-import DataTableBlockView  from './DataTableBlock/View';
-import DataTableBlockEdit from './DataTableBlock/Edit';
+export const DataTableBlockView = loadable(() =>
+  import('./DataTableBlock/View'),
+);
 
-export {DataTableBlockView, DataTableBlockEdit};
+export const DataTableBlockEdit = loadable(() =>
+    import('./DataTableBlock/Edit'),
+  );
+  

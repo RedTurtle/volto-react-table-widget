@@ -49,4 +49,4 @@ msgstr "Ripristinare tutte le modifiche"
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo message
 msgid "Undo message"
-msgstr "Messaggio di ripristino"
+msgstr "Tutte le modifiche verranno annullate"
