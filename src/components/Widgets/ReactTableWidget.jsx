@@ -65,8 +65,7 @@ const ReactDataTableWidget = (props) => {
 
   const tablecolumns = React.useMemo(
     () => [...header_columns],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [header_columns],
   );
 
   const [originalData] = React.useState(value);
