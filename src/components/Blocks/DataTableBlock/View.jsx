@@ -20,6 +20,60 @@ const View = ({ data, id, path, properties }) => {
   const sortable_fields = data?.sortable || [];
   const filterable_fields = data?.filterable || [];
   const intl = useIntl();
+  const includesFilter = (rows, ids, filterValue) => {
+    return rows.filter((row) => {
+      return ids.some((id) => {
+        const rowValue = row.values[id];
+        return rowValue && rowValue.includes(filterValue);
+      });
+    });
+  };
+  const SelectColumnFilter = ({
+    column: { filterValue, setFilter, preFilteredRows, id },
+  }) => {
+    // Calculate the options for filtering
+    // using the preFilteredRows
+    const options = React.useMemo(() => {
+      const options = new Set();
+      preFilteredRows.forEach((row) => {
+        row.values[id] && options.add(row.values[id]);
+      });
+      return [...options.values()];
+    }, [id, preFilteredRows]);
+
+    // Render a multi-select box
+    return (
+      <select
+        style={{ maxWidth: '100%' }}
+        value={filterValue}
+        onChange={(e) => {
+          setFilter(e.target.value || undefined);
+        }}
+      >
+        <option value="">All</option>
+        {options.map((option, i) => (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  };
+  const TextColumnFilter = ({
+    column: { filterValue, preFilteredRows, setFilter },
+  }) => {
+    const count = preFilteredRows.length;
+
+    return (
+      <input
+        value={filterValue || ''}
+        onChange={(e) => {
+          setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+        }}
+        // placeholder={`Search ${count} records...`}
+      />
+    );
+  };
   const header_columns = schema
     ? schema.fieldsets[0].fields.map((field) => {
         const filter = {
@@ -48,22 +102,6 @@ const View = ({ data, id, path, properties }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
-  function TextColumnFilter({
-    column: { filterValue, preFilteredRows, setFilter },
-  }) {
-    const count = preFilteredRows.length;
-
-    return (
-      <input
-        value={filterValue || ''}
-        onChange={(e) => {
-          setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
-        }}
-        // placeholder={`Search ${count} records...`}
-      />
-    );
-  }
 
   const DefaultColumnFilter = () => {
     return null;
@@ -103,49 +141,9 @@ const View = ({ data, id, path, properties }) => {
     useSortBy,
     usePagination,
   );
-  function SelectColumnFilter({
-    column: { filterValue, setFilter, preFilteredRows, id },
-  }) {
-    // Calculate the options for filtering
-    // using the preFilteredRows
-    const options = React.useMemo(() => {
-      const options = new Set();
-      preFilteredRows.forEach((row) => {
-        row.values[id] && options.add(row.values[id]);
-      });
-      return [...options.values()];
-    }, [id, preFilteredRows]);
-
-    // Render a multi-select box
-    return (
-      <select
-        style={{ maxWidth: '100%' }}
-        value={filterValue}
-        onChange={(e) => {
-          setFilter(e.target.value || undefined);
-        }}
-      >
-        <option value="">All</option>
-        {options.map((option, i) => (
-          <option key={i} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    );
-  }
-
-  const includesFilter = (rows, ids, filterValue) => {
-    return rows.filter((row) => {
-      return ids.some((id) => {
-        const rowValue = row.values[id];
-        return rowValue && rowValue.includes(filterValue);
-      });
-    });
-  };
 
   return (
-    <div className="cms-ui">
+    <div className="cms-ui" style={{ marginTop: '1em' }}>
       <Table celled {...getTableProps()}>
         <Table.Header>
           {headerGroups.map((headerGroup, key) => (
