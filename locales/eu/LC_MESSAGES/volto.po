@@ -11,11 +11,13 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: CSV file imported correctly
 msgid "CSV file imported correctly"
 msgstr "CSV fitxategia ongi inportatu da"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Export CSV file
 msgid "Export CSV file"
@@ -31,22 +33,66 @@ msgstr "Inportatu CSV fitxategia"
 msgid "Imported item count"
 msgstr "{count} elementu berri inportatu dira"
 
+#: components/Widgets/ModalImport
+# defaultMessage: {count} new items to import
+msgid "Item count"
+msgstr ""
+
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: {count} items modified
 msgid "Modified item count"
 msgstr "{count} elementu aldatu dira"
 
+#: components/Widgets/ModalImport
+# defaultMessage: {count} items preview
+msgid "Preview item count"
+msgstr ""
+
+#: components/Widgets/ModalImport
+# defaultMessage: Select CSV file
+msgid "Select CSV file"
+msgstr ""
+
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo
 msgid "Undo"
 msgstr "Desegin"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo all modifications
 msgid "Undo all modifications"
 msgstr "Desegin aldaketa guztiak"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo message
 msgid "Undo message"
 msgstr "Aldaketa guztiak desegin dira"
+
+#: components/Widgets/EditableTable
+# defaultMessage: Actions
+msgid "editable_table_actions"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: No filter
+msgid "no_filter"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/View
+# defaultMessage: Show {pageSize}
+msgid "page_size"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: Select value
+msgid "select_value_filter"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: Text filter
+msgid "text_filter"
+msgstr ""

@@ -11,11 +11,13 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: CSV file imported correctly
 msgid "CSV file imported correctly"
 msgstr "Fichero CSV importado correctamente"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Export CSV file
 msgid "Export CSV file"
@@ -31,22 +33,66 @@ msgstr "Importar fichero CSV"
 msgid "Imported item count"
 msgstr "{count} nuevos items importados"
 
+#: components/Widgets/ModalImport
+# defaultMessage: {count} new items to import
+msgid "Item count"
+msgstr ""
+
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: {count} items modified
 msgid "Modified item count"
 msgstr "{count} items modificados"
 
+#: components/Widgets/ModalImport
+# defaultMessage: {count} items preview
+msgid "Preview item count"
+msgstr ""
+
+#: components/Widgets/ModalImport
+# defaultMessage: Select CSV file
+msgid "Select CSV file"
+msgstr ""
+
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo
 msgid "Undo"
 msgstr "Deshacer"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo all modifications
 msgid "Undo all modifications"
 msgstr "Deshacer todas las modificaciones"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo message
 msgid "Undo message"
 msgstr "Se han deshecho todas las modificaciones realizadas"
+
+#: components/Widgets/EditableTable
+# defaultMessage: Actions
+msgid "editable_table_actions"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: No filter
+msgid "no_filter"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/View
+# defaultMessage: Show {pageSize}
+msgid "page_size"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: Select value
+msgid "select_value_filter"
+msgstr ""
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: Text filter
+msgid "text_filter"
+msgstr ""

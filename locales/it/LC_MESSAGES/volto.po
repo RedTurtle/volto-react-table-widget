@@ -11,42 +11,88 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: CSV file imported correctly
 msgid "CSV file imported correctly"
 msgstr "file CSV importato correttamente"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Export CSV file
 msgid "Export CSV file"
-msgstr "Esporta file CSV"
+msgstr "Esporta dati su file CSV"
 
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Import CSV file
 msgid "Import CSV file"
-msgstr "Importa file CSV"
+msgstr "Importa dati da file CSV"
 
 #: components/Widgets/ReactTableWidget
 # defaultMessage: {count} new items imported
 msgid "Imported item count"
 msgstr "{count} nuovi elementi importati"
 
+#: components/Widgets/ModalImport
+# defaultMessage: {count} new items to import
+msgid "Item count"
+msgstr "{count} nuovi elementi da importare"
+
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: {count} items modified
 msgid "Modified item count"
 msgstr "{count} elementi modificati"
 
+#: components/Widgets/ModalImport
+# defaultMessage: {count} items preview
+msgid "Preview item count"
+msgstr "{count} elementi di esempio"
+
+#: components/Widgets/ModalImport
+# defaultMessage: Select CSV file
+msgid "Select CSV file"
+msgstr "Seleziona file CSV"
+
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo
 msgid "Undo"
 msgstr "Ripristina"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo all modifications
 msgid "Undo all modifications"
 msgstr "Ripristinare tutte le modifiche"
 
+#: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Undo message
 msgid "Undo message"
 msgstr "Tutte le modifiche verranno annullate"
+
+#: components/Widgets/EditableTable
+# defaultMessage: Actions
+msgid "editable_table_actions"
+msgstr "Azioni"
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: No filter
+msgid "no_filter"
+msgstr "Nessun filtro"
+
+#: components/Blocks/DataTableBlock/View
+# defaultMessage: Show {pageSize}
+msgid "page_size"
+msgstr "Visualizza {pageSize} elementi per pagina"
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: Select value
+msgid "select_value_filter"
+msgstr "Seleziona valore"
+
+#: components/Blocks/DataTableBlock/Edit
+# defaultMessage: Text filter
+msgid "text_filter"
+msgstr "Filtra per testo"

@@ -9,10 +9,18 @@ import paginationLeftSVG from '@plone/volto/icons/left-key.svg';
 import paginationRightSVG from '@plone/volto/icons/right-key.svg';
 import plusSVG from '@plone/volto/icons/circle-plus.svg';
 import { EditableCell } from './EditableCell';
+import { defineMessages, useIntl } from 'react-intl';
 
 const defaultColumn = {
   Cell: EditableCell,
 };
+
+const messages = defineMessages({
+  actions: {
+    id: 'editable_table_actions',
+    defaultMessage: 'Actions',
+  },
+});
 
 function EditableTable(props) {
   const {
@@ -25,6 +33,7 @@ function EditableTable(props) {
     setSelectedRow,
     schema,
     reactSelect,
+    columnActions,
   } = props;
   const {
     getTableProps,
@@ -49,6 +58,7 @@ function EditableTable(props) {
     },
     usePagination,
   );
+  const intl = useIntl();
   if (data.length === 0) {
     addRowAfter({ key: 'Enter' }, 0, pageIndex, pageSize);
   }
@@ -62,13 +72,16 @@ function EditableTable(props) {
       <Table celled {...getTableProps()}>
         <Table.Header>
           {headerGroups.map((headerGroup, key) => (
-            <Table.Row key={key} {...headerGroup.getHeaderGroupProps()}>
+            <Table.Row key={key} {...headerGroup.getHeaderGroupProps()} style={{verticalAlign: 'top'}}>
+              <Table.HeaderCell>
+                {intl.formatMessage(messages.actions)}
+              </Table.HeaderCell>
               {headerGroup.headers.map((column) => (
                 <Table.HeaderCell {...column.getHeaderProps()}>
                   {column.render('Header')}
+                  {columnActions && columnActions(column)}
                 </Table.HeaderCell>
               ))}
-              <Table.HeaderCell>{'Actions'}</Table.HeaderCell>
             </Table.Row>
           ))}
         </Table.Header>
@@ -82,13 +95,6 @@ function EditableTable(props) {
                 }
                 {...row.getRowProps()}
               >
-                {row.cells.map((cell) => {
-                  return (
-                    <Table.Cell {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </Table.Cell>
-                  );
-                })}
                 <Table.Cell>
                   <div className={'row-actions'}>
                     <span
@@ -115,6 +121,13 @@ function EditableTable(props) {
                     </span>
                   </div>
                 </Table.Cell>
+                {row.cells.map((cell) => {
+                  return (
+                    <Table.Cell {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </Table.Cell>
+                  );
+                })}
               </Table.Row>
             );
           })}

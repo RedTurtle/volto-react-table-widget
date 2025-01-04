@@ -46,3 +46,10 @@
 .selected-row .react-table-text-field {
   height: 3.7em;
 }
+
+.editable-table-wrapper {
+  overflow-x: scroll;
+  max-width: 65vw;
+  white-space: nowrap;
+  margin-top: 1em;
+}

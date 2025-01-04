@@ -2,10 +2,12 @@ import ReactTableWidget from './components/Widgets/ReactTableWidget';
 export { ReactTableWidget };
 import {DataTableBlockView, DataTableBlockEdit} from './components/Blocks';
 
+import IconSVG from '@plone/volto/icons/registry-resources.svg';
+
 export const dataTableBlock = {
   id: 'dataTableBlock',
   title: 'Data Table',
-  icon: 'default',
+  icon: IconSVG,
   group: 'common',
   view: DataTableBlockView,
   edit: DataTableBlockEdit,
