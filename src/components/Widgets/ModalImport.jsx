@@ -17,6 +17,7 @@ import deleteSVG from '@plone/volto/icons/delete.svg';
 import paginationLeftSVG from '@plone/volto/icons/left-key.svg';
 import paginationRightSVG from '@plone/volto/icons/right-key.svg';
 import { CSVLink } from 'react-csv';
+// TODO: replace papaparse
 import { useCSVReader } from 'react-papaparse';
 import { useTable } from 'react-table';
 import { toast } from 'react-toastify';
@@ -117,9 +118,13 @@ const ModalImport = ({
               <CSVReader
                 accept=".csv"
                 onUploadAccepted={(results) => {
-                  console.log(results);
+                  // console.log(results);
                   let newdatacount = 0;
                   const newdata = results.data.map((item) => {
+                    if ("" in item) {
+                      item["_"] = item[""];
+                      delete item[""];
+                    }
                     if (!item['@id']) {
                       newdatacount += 1;
                       return {
@@ -129,7 +134,7 @@ const ModalImport = ({
                     }
                     return item;
                   });
-                  const modifiedcount = newdata.length - newdatacount;
+                  // const modifiedcount = newdata.length - newdatacount;
                   if (updateSchemaOnImport && results.data.length > 0) {
                     const imported_fields = Object.keys(results.data[0]);
                     const schema_fields = schema.fieldsets?.[0]?.fields || [];
