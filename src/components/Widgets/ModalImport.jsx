@@ -68,13 +68,14 @@ const messages = defineMessages({
 const ModalImport = ({
   id,
   onChange,
-  schema,
+  // schema,
+  // onChangeSchema,
   showModalImport,
   setShowModalImport,
-  updateSchema,
+  // updateSchema,
 }) => {
   const { CSVReader } = useCSVReader();
-  const [updateSchemaOnImport, setUpdateSchemaOnImport] = useState(true);
+  // const [updateSchemaOnImport, setUpdateSchemaOnImport] = useState(true);
   const intl = useIntl();
   const [result, setResult] = useState({
     schema: null,
@@ -121,9 +122,9 @@ const ModalImport = ({
                   // console.log(results);
                   let newdatacount = 0;
                   const newdata = results.data.map((item) => {
-                    if ("" in item) {
-                      item["_"] = item[""];
-                      delete item[""];
+                    if ('' in item) {
+                      item['_'] = item[''];
+                      delete item[''];
                     }
                     if (!item['@id']) {
                       newdatacount += 1;
@@ -135,10 +136,10 @@ const ModalImport = ({
                     return item;
                   });
                   // const modifiedcount = newdata.length - newdatacount;
-                  if (updateSchemaOnImport && results.data.length > 0) {
+                  if (results.data.length > 0) {
                     const imported_fields = Object.keys(results.data[0]);
-                    const schema_fields = schema.fieldsets?.[0]?.fields || [];
-                    const schema_properties = schema.properties || {};
+                    const schema_fields = []; // schema.fieldsets?.[0]?.fields || [];
+                    const schema_properties = {}; // schema.properties || {};
                     imported_fields.forEach((field) => {
                       if (!schema_fields.includes(field)) {
                         schema_fields.push(field);
@@ -152,17 +153,25 @@ const ModalImport = ({
                         };
                       }
                     });
-                    schema.fieldsets = [
-                      {
-                        ...schema.fieldsets?.[0],
-                        fields: schema_fields,
-                      },
-                    ];
-                    schema.properties = schema_properties;
+                    // schema.fieldsets = [
+                    //   {
+                    //     ...schema.fieldsets?.[0],
+                    //     fields: schema_fields,
+                    //   },
+                    // ];
+                    // schema.properties = schema_properties;
                     // onChange(id, newdata, schema);
                     setResult({
                       data: newdata,
-                      schema,
+                      schema: {
+                        fieldsets: [
+                          {
+                            // ...schema.fieldsets?.[0],
+                            fields: schema_fields,
+                          },
+                        ],
+                        properties: schema_properties,
+                      },
                     });
                   } else {
                     // onChange(id, newdata);
@@ -230,10 +239,11 @@ const ModalImport = ({
                   count: 9,
                 })}
             </p>
-            <Preview schema={schema} data={result.data.slice(0, 9)} />
+            <Preview schema={result.schema} data={result.data.slice(0, 9)} />
             <Button
               onClick={() => {
                 onChange && onChange(id, result.data, result.schema);
+                // onChangeSchema && onChangeSchema({schema: result.schema} );
                 setResult({ schema: null, data: null, error: null });
                 setShowModalImport(false);
               }}

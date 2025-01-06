@@ -55,10 +55,9 @@ const messages = defineMessages({
   },
 });
 
-const ReactDataTableWidget = (props) => {
+const ReactTableWidget = (props) => {
   const {
     schema,
-    updateSchema,
     value,
     onChange,
     id,
@@ -208,7 +207,7 @@ const ReactDataTableWidget = (props) => {
             <ModalImport
               id={id}
               onChange={onChange}
-              schema={schema}
+              // schema={schema}
               showModalImport={showModalImport}
               setShowModalImport={setShowModalImport}
             />
@@ -233,4 +232,4 @@ const ReactDataTableWidget = (props) => {
   );
 };
 
-export default ReactDataTableWidget;
+export default ReactTableWidget;
