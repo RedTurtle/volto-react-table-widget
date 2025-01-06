@@ -166,11 +166,13 @@ const ModalImport = ({
                       schema: {
                         fieldsets: [
                           {
-                            // ...schema.fieldsets?.[0],
+                            id: 'default',
+                            title: 'Default',
                             fields: schema_fields,
                           },
                         ],
                         properties: schema_properties,
+                        required: [],
                       },
                     });
                   } else {
