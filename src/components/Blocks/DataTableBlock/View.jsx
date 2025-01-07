@@ -12,6 +12,10 @@ const messages = defineMessages({
     id: 'page_size',
     defaultMessage: 'Show {pageSize}',
   },
+  all: {
+    id: 'all',
+    defaultMessage: 'All',
+  },
 });
 
 const View = ({ data, id, path, properties }) => {
@@ -50,7 +54,7 @@ const View = ({ data, id, path, properties }) => {
           setFilter(e.target.value || undefined);
         }}
       >
-        <option value="">All</option>
+        <option value="">{intl.formatMessage(messages.all)}</option>
         {options.map((option, i) => (
           <option key={i} value={option}>
             {option}

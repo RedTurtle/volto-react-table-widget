@@ -72,6 +72,11 @@ msgstr "Deshacer todas las modificaciones"
 msgid "Undo message"
 msgstr "Se han deshecho todas las modificaciones realizadas"
 
+#: components/Blocks/DataTableBlock/View
+# defaultMessage: All
+msgid "all"
+msgstr ""
+
 #: components/Widgets/EditableTable
 # defaultMessage: Actions
 msgid "editable_table_actions"

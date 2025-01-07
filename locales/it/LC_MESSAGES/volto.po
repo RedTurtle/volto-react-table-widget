@@ -72,6 +72,11 @@ msgstr "Ripristinare tutte le modifiche"
 msgid "Undo message"
 msgstr "Tutte le modifiche verranno annullate"
 
+#: components/Blocks/DataTableBlock/View
+# defaultMessage: All
+msgid "all"
+msgstr "Tutti"
+
 #: components/Widgets/EditableTable
 # defaultMessage: Actions
 msgid "editable_table_actions"

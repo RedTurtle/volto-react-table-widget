@@ -72,6 +72,11 @@ msgstr "Desegin aldaketa guztiak"
 msgid "Undo message"
 msgstr "Aldaketa guztiak desegin dira"
 
+#: components/Blocks/DataTableBlock/View
+# defaultMessage: All
+msgid "all"
+msgstr ""
+
 #: components/Widgets/EditableTable
 # defaultMessage: Actions
 msgid "editable_table_actions"
