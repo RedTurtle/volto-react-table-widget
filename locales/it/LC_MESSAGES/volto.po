@@ -17,6 +17,11 @@ msgstr ""
 msgid "CSV file imported correctly"
 msgstr "file CSV importato correttamente"
 
+#: index
+# defaultMessage: Data Table
+msgid "DataTableBlock"
+msgstr "Tabella Dati"
+
 #: components/Widgets/ModalImport
 #: components/Widgets/ReactTableWidget
 # defaultMessage: Export CSV file

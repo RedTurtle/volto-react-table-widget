@@ -1,8 +1,16 @@
 import ReactTableWidget from './components/Widgets/ReactTableWidget';
 export { ReactTableWidget };
 import {DataTableBlockView, DataTableBlockEdit} from './components/Blocks';
+import { defineMessages } from 'react-intl';
 
 import IconSVG from '@plone/volto/icons/registry-resources.svg';
+
+defineMessages({
+  'DataTableBlock': {
+    id: 'DataTableBlock',
+    defaultMessage: 'Data Table',
+  },
+});
 
 export const dataTableBlock = {
   id: 'dataTableBlock',
