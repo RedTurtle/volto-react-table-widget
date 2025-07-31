@@ -5,6 +5,8 @@ import { Pagination, Table } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 import paginationLeftSVG from '@plone/volto/icons/left-key.svg';
 import paginationRightSVG from '@plone/volto/icons/right-key.svg';
+import sortUp from '@plone/volto/icons/sort-up.svg';
+import sortDown from '@plone/volto/icons/sort-down.svg';
 import { defineMessages, useIntl } from 'react-intl';
 
 const messages = defineMessages({
@@ -90,7 +92,10 @@ const View = ({ data, id, path, properties }) => {
           },
         }[filterable_fields[field]] || { canFilter: false };
         // TODO: attualmente non implementato
-        const sort = { defaultCanSort: sortable_fields.includes(field) };
+        const sort = {
+          defaultCanSort: true,
+          // TODO: defaultCanSort: sortable_fields.includes(field),
+        };
         return {
           Header: schema.properties[field]?.title,
           accessor: field,
@@ -153,20 +158,25 @@ const View = ({ data, id, path, properties }) => {
           {headerGroups.map((headerGroup, key) => (
             <Table.Row key={key} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                // <Table.HeaderCell {...column.getHeaderProps(column.getSortByToggleProps())}>
                 <Table.HeaderCell
-                  {...column.getHeaderProps()}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
                   className="wide one"
                   style={{ maxWidth: '40px', verticalAlign: 'top' }}
                 >
                   {column.render('Header')}
-                  {/* {column.defaultCanSort && <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>} */}
+                  {column.defaultCanSort && (
+                    <span class="sort">
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <Icon name={sortUp} />
+                        ) : (
+                          <Icon name={sortDown} />
+                        )
+                      ) : (
+                        <Icon name={sortDown} color="#D3D3D3" />
+                      )}
+                    </span>
+                  )}
                   <div>{column.canFilter ? column.render('Filter') : null}</div>
                 </Table.HeaderCell>
               ))}
