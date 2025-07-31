@@ -26,7 +26,14 @@
   display: inline-flex;
   width: 100%;
   justify-content: center;
+  position: relative;
 }
+
+.react-table-pagination .actions {
+  right: 0;
+  position: absolute;
+}
+
 
 .selected-row
   .ui.selection.dropdown:not(.multiple):not(.search)

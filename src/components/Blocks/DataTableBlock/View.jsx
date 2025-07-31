@@ -8,6 +8,7 @@ import paginationRightSVG from '@plone/volto/icons/right-key.svg';
 import sortUp from '@plone/volto/icons/sort-up.svg';
 import sortDown from '@plone/volto/icons/sort-down.svg';
 import { defineMessages, useIntl } from 'react-intl';
+import { CSVLink } from 'react-csv';
 
 const messages = defineMessages({
   page_size: {
@@ -17,6 +18,10 @@ const messages = defineMessages({
   all: {
     id: 'all',
     defaultMessage: 'All',
+  },
+  export_csv_file: {
+    id: 'Export CSV file',
+    defaultMessage: 'Export CSV file',
   },
 });
 
@@ -101,6 +106,15 @@ const View = ({ data, id, path, properties }) => {
           accessor: field,
           ...sort,
           ...filter,
+        };
+      })
+    : [];
+
+  const csv_columns = schema
+    ? schema.fieldsets[0].fields.map((field) => {
+        return {
+          label: schema.properties[field]?.title || field,
+          key: field,
         };
       })
     : [];
@@ -201,42 +215,57 @@ const View = ({ data, id, path, properties }) => {
         </Table.Body>
       </Table>
 
-      {data?.items && data.items.length > 10 && (
+      {data?.items && (
         <div className="pagination-wrapper react-table-pagination cms-ui">
-          <Pagination
-            activePage={pageIndex + 1}
-            totalPages={pageCount}
-            onPageChange={(e, { activePage }) => {
-              gotoPage(activePage - 1);
-            }}
-            firstItem={null}
-            lastItem={null}
-            prevItem={{
-              content: <Icon name={paginationLeftSVG} size="18px" />,
-              icon: true,
-              'aria-disabled': pageIndex + 1 === 1,
-              className: pageIndex + 1 === 1 ? 'disabled' : null,
-            }}
-            nextItem={{
-              content: <Icon name={paginationRightSVG} size="18px" />,
-              icon: true,
-              'aria-disabled': pageIndex + 1 === pageCount,
-              className: pageIndex + 1 === pageCount ? 'disabled' : null,
-            }}
-          ></Pagination>
-          <select
-            style={{ maxWidth: '7rem' }}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 25, 50, 100].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {intl.formatMessage(messages.page_size, { pageSize })}
-              </option>
-            ))}
-          </select>
+          {data.items.length > 10 && (
+            <>
+              <Pagination
+                activePage={pageIndex + 1}
+                totalPages={pageCount}
+                onPageChange={(e, { activePage }) => {
+                  gotoPage(activePage - 1);
+                }}
+                firstItem={null}
+                lastItem={null}
+                prevItem={{
+                  content: <Icon name={paginationLeftSVG} size="18px" />,
+                  icon: true,
+                  'aria-disabled': pageIndex + 1 === 1,
+                  className: pageIndex + 1 === 1 ? 'disabled' : null,
+                }}
+                nextItem={{
+                  content: <Icon name={paginationRightSVG} size="18px" />,
+                  icon: true,
+                  'aria-disabled': pageIndex + 1 === pageCount,
+                  className: pageIndex + 1 === pageCount ? 'disabled' : null,
+                }}
+              ></Pagination>
+              <select
+                style={{ maxWidth: '7rem' }}
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                }}
+              >
+                {[10, 25, 50, 100].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    {intl.formatMessage(messages.page_size, { pageSize })}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+          <div className="actions">
+            <CSVLink
+              className="ui button"
+              filename={schema.title ? `${schema.title}.csv` : 'export.csv'}
+              separator=";"
+              headers={csv_columns}
+              data={data?.items || []}
+            >
+              {intl.formatMessage(messages.export_csv_file)}
+            </CSVLink>
+          </div>
         </div>
       )}
     </div>
