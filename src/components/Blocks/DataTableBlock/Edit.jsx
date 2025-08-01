@@ -1,16 +1,9 @@
 import { ReactTableWidget } from '@eeacms/volto-react-table-widget';
-import {
-  Error,
-  Form,
-  Icon,
-  Toast,
-  Toolbar,
-  SidebarPortal,
-} from '@plone/volto/components';
-import { useEffect, useState, useMemo, useRef } from 'react';
-import { FormGroup, FormField, Radio } from 'semantic-ui-react';
-import { Checkbox } from 'semantic-ui-react';
+import { SidebarPortal } from '@plone/volto/components';
+import { useMemo } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
+// import { BlockDataForm } from '@plone/volto/components/manage/Form';
+import { InlineForm } from '@plone/volto/components/manage/Form';
 
 const messages = defineMessages({
   no_filter: {
@@ -26,6 +19,7 @@ const messages = defineMessages({
     defaultMessage: 'Text filter',
   },
 });
+
 const emptySchema = () => {
   return {
     properties: {},
@@ -40,22 +34,16 @@ const emptySchema = () => {
   };
 };
 
-const Edit = ({ block, data, onChangeBlock, selected }) => {
+const Edit = (props) => {
+  const { block, data, onChangeBlock, selected } = props;
   const intl = useIntl();
-  // const form = useRef();
   const onChange = (id, props) => {
     const { items, schema } = props;
-    // console.log("change data")
     onChangeBlock(block, {
       ...data,
       items: items,
       schema: schema || data.schema,
     });
-    // if (schema) {
-    //     debugger;
-    //     console.log(form);
-    // }
-    // form.current.forceUpdate();
   };
 
   const contentTypeSchema = {
@@ -81,13 +69,6 @@ const Edit = ({ block, data, onChangeBlock, selected }) => {
     layouts: null,
   };
 
-  const onChangeSchema = ({ schema }) => {
-    onChangeBlock(block, {
-      ...data,
-      schema: schema,
-    });
-  };
-
   const schema = useMemo(() => {
     if (data?.schema) {
       return data.schema;
@@ -95,18 +76,6 @@ const Edit = ({ block, data, onChangeBlock, selected }) => {
       return emptySchema();
     }
   }, [data?.schema]);
-
-  // const fields = data?.schema?.fieldsets?.[0]?.fields || [];
-
-  // const onChangeSortable = (value, checked) => {
-  //     console.log(value, checked);
-  //     const sortable = data?.sortable || [];
-  //     onChangeBlock(block, {
-  //         ...data,
-  //         sortable: checked ? [...sortable, value]: sortable.filter((f) => f !== value),
-  //     });
-  //     console.log(checked ? [...sortable, value]: sortable.filter((f) => f !== value));
-  // };
 
   const onChangeFilterable = (field, value) => {
     const filterable = data?.filterable || {};
@@ -123,7 +92,7 @@ const Edit = ({ block, data, onChangeBlock, selected }) => {
         schema={schema}
         csvexport={true}
         csvimport={true}
-        undomodifications={true}
+        undomodifications={false}
         value={data?.items || []}
         onChange={(id, items, schema) => onChange(id, { items, schema })}
         columnActions={(column) => (
@@ -140,21 +109,24 @@ const Edit = ({ block, data, onChangeBlock, selected }) => {
                 {intl.formatMessage(messages.text_filter)}
               </option>
             </select>
-            {/* <pre>{JSON.stringify(column, null, 2)}</pre> */}
           </div>
         )}
       />
-
       <SidebarPortal selected={selected}>
-        <h3>Schema dati</h3>
-        <Form
+        <InlineForm
           schema={contentTypeSchema}
           formData={{ schema: schema }}
-          onChangeFormData={onChangeSchema}
+          onChangeBlock={onChangeBlock}
+          onChangeField={(id, value, itemInfo) => {
+            console.log(id, value, itemInfo);
+            onChangeBlock(block, {
+              ...data,
+              [id]: value,
+            });
+          }}
+          applySchemaEnhancers={false}
           hideActions
         />
-        {/* <pre>{JSON.stringify(data?.schema, null, 2)}</pre> */}
-        {/* <pre>{JSON.stringify(data?.sortable, null, 2)}</pre> */}
       </SidebarPortal>
     </>
   );

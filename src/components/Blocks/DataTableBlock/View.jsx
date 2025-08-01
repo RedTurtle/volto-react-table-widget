@@ -28,7 +28,7 @@ const messages = defineMessages({
 const View = ({ data, id, path, properties }) => {
   // console.log(props);
   const schema = data?.schema;
-  const sortable_fields = data?.sortable || [];
+  // const sortable_fields = data?.sortable || [];
   const filterable_fields = data?.filterable || [];
   const intl = useIntl();
   const includesFilter = (rows, ids, filterValue) => {
@@ -166,108 +166,114 @@ const View = ({ data, id, path, properties }) => {
   );
 
   return (
-    <div className="cms-ui" style={{ marginTop: '1em' }}>
-      <Table celled {...getTableProps()}>
-        <Table.Header>
-          {headerGroups.map((headerGroup, key) => (
-            <Table.Row key={key} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <Table.HeaderCell
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="wide one"
-                  style={{ maxWidth: '40px', verticalAlign: 'top' }}
-                >
-                  {column.render('Header')}
-                  {column.defaultCanSort && (
-                    <span class="sort">
-                      {column.isSorted ? (
-                        column.isSortedDesc ? (
-                          <Icon name={sortUp} />
+    <div className="block dataTableBlock">
+      <div className="cms-ui" style={{ marginTop: '1em' }}>
+        <Table celled {...getTableProps()}>
+          <Table.Header>
+            {headerGroups.map((headerGroup, key) => (
+              <Table.Row key={key} {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <Table.HeaderCell
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="wide one"
+                    style={{ maxWidth: '40px', verticalAlign: 'top' }}
+                  >
+                    {column.render('Header')}
+                    {column.defaultCanSort && (
+                      <span class="sort">
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <Icon name={sortUp} />
+                          ) : (
+                            <Icon name={sortDown} />
+                          )
                         ) : (
-                          <Icon name={sortDown} />
-                        )
-                      ) : (
-                        <Icon name={sortDown} color="#D3D3D3" />
-                      )}
-                    </span>
-                  )}
-                  <div>{column.canFilter ? column.render('Filter') : null}</div>
-                </Table.HeaderCell>
-              ))}
-            </Table.Row>
-          ))}
-        </Table.Header>
-        <Table.Body {...getTableBodyProps()}>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <Table.Row {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <Table.Cell {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </Table.Cell>
-                  );
-                })}
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
-
-      {data?.items && (
-        <div className="pagination-wrapper react-table-pagination cms-ui">
-          {data.items.length > 10 && (
-            <>
-              <Pagination
-                activePage={pageIndex + 1}
-                totalPages={pageCount}
-                onPageChange={(e, { activePage }) => {
-                  gotoPage(activePage - 1);
-                }}
-                firstItem={null}
-                lastItem={null}
-                prevItem={{
-                  content: <Icon name={paginationLeftSVG} size="18px" />,
-                  icon: true,
-                  'aria-disabled': pageIndex + 1 === 1,
-                  className: pageIndex + 1 === 1 ? 'disabled' : null,
-                }}
-                nextItem={{
-                  content: <Icon name={paginationRightSVG} size="18px" />,
-                  icon: true,
-                  'aria-disabled': pageIndex + 1 === pageCount,
-                  className: pageIndex + 1 === pageCount ? 'disabled' : null,
-                }}
-              ></Pagination>
-              <select
-                style={{ maxWidth: '7rem' }}
-                value={pageSize}
-                onChange={(e) => {
-                  setPageSize(Number(e.target.value));
-                }}
-              >
-                {[10, 25, 50, 100].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    {intl.formatMessage(messages.page_size, { pageSize })}
-                  </option>
+                          <Icon name={sortDown} color="#D3D3D3" />
+                        )}
+                      </span>
+                    )}
+                    <div>
+                      {column.canFilter ? column.render('Filter') : null}
+                    </div>
+                  </Table.HeaderCell>
                 ))}
-              </select>
-            </>
-          )}
-          <div className="actions">
-            <CSVLink
-              className="ui button"
-              filename={schema.title ? `${schema.title}.csv` : 'export.csv'}
-              separator=";"
-              headers={csv_columns}
-              data={data?.items || []}
-            >
-              {intl.formatMessage(messages.export_csv_file)}
-            </CSVLink>
+              </Table.Row>
+            ))}
+          </Table.Header>
+          <Table.Body {...getTableBodyProps()}>
+            {page.map((row, i) => {
+              prepareRow(row);
+              return (
+                <Table.Row {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <Table.Cell {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </Table.Cell>
+                    );
+                  })}
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+
+        {data?.items && (
+          <div className="pagination-wrapper react-table-pagination cms-ui">
+            {data.items.length > 10 && (
+              <>
+                <Pagination
+                  activePage={pageIndex + 1}
+                  totalPages={pageCount}
+                  onPageChange={(e, { activePage }) => {
+                    gotoPage(activePage - 1);
+                  }}
+                  firstItem={null}
+                  lastItem={null}
+                  prevItem={{
+                    content: <Icon name={paginationLeftSVG} size="18px" />,
+                    icon: true,
+                    'aria-disabled': pageIndex + 1 === 1,
+                    className: pageIndex + 1 === 1 ? 'disabled' : null,
+                  }}
+                  nextItem={{
+                    content: <Icon name={paginationRightSVG} size="18px" />,
+                    icon: true,
+                    'aria-disabled': pageIndex + 1 === pageCount,
+                    className: pageIndex + 1 === pageCount ? 'disabled' : null,
+                  }}
+                ></Pagination>
+                <select
+                  style={{ maxWidth: '7rem' }}
+                  value={pageSize}
+                  onChange={(e) => {
+                    setPageSize(Number(e.target.value));
+                  }}
+                >
+                  {[10, 25, 50, 100]
+                    .filter((v) => data.items.length * 2 > v)
+                    .map((pageSize) => (
+                      <option key={pageSize} value={pageSize}>
+                        {intl.formatMessage(messages.page_size, { pageSize })}
+                      </option>
+                    ))}
+                </select>
+              </>
+            )}
+            <div className="actions">
+              <CSVLink
+                className="ui button"
+                filename={schema.title ? `${schema.title}.csv` : 'export.csv'}
+                separator=";"
+                headers={csv_columns}
+                data={data?.items || []}
+              >
+                {intl.formatMessage(messages.export_csv_file)}
+              </CSVLink>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
