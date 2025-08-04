@@ -8,7 +8,7 @@ import paginationRightSVG from '@plone/volto/icons/right-key.svg';
 import sortUp from '@plone/volto/icons/sort-up.svg';
 import sortDown from '@plone/volto/icons/sort-down.svg';
 import { defineMessages, useIntl } from 'react-intl';
-import { CSVLink } from 'react-csv';
+import TableActions from '@eeacms/volto-react-table-widget/components/Blocks/DataTableBlock/TableActions';
 
 const messages = defineMessages({
   page_size: {
@@ -18,10 +18,6 @@ const messages = defineMessages({
   all: {
     id: 'all',
     defaultMessage: 'All',
-  },
-  export_csv_file: {
-    id: 'Export CSV file',
-    defaultMessage: 'Export CSV file',
   },
 });
 
@@ -180,7 +176,7 @@ const View = ({ data, id, path, properties }) => {
                   >
                     {column.render('Header')}
                     {column.defaultCanSort && (
-                      <span class="sort">
+                      <span className="sort">
                         {column.isSorted ? (
                           column.isSortedDesc ? (
                             <Icon name={sortUp} />
@@ -260,17 +256,13 @@ const View = ({ data, id, path, properties }) => {
                 </select>
               </>
             )}
-            <div className="actions">
-              <CSVLink
-                className="ui button"
-                filename={schema.title ? `${schema.title}.csv` : 'export.csv'}
-                separator=";"
-                headers={csv_columns}
-                data={data?.items || []}
-              >
-                {intl.formatMessage(messages.export_csv_file)}
-              </CSVLink>
-            </div>
+            <TableActions
+              path={path}
+              block_id={id}
+              schema={schema}
+              columns={csv_columns}
+              items={data?.items || []}
+            />
           </div>
         )}
       </div>
